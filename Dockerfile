@@ -12,6 +12,7 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-serv
 
 # set java home
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin
 
 # setup ssh with no passphrase
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
