@@ -55,6 +55,9 @@ RUN mv /tmp/ssh_config $HOME/.ssh/config \
     && cp $HADOOP_HOME/etc/hadoop/mapred-site.xml.template $HADOOP_HOME/etc/hadoop/mapred-site.xml \
     && mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
 
+#formatting the HDFS
+RUN hdfs namenode -format
+
 # Add startup script
 ADD scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 
