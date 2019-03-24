@@ -64,6 +64,7 @@ RUN chmod 744 -R $HADOOP_HOME
 
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
+RUN $HADOOP_HOME/bin/hdfs fs -mkdir /input
 
 # run hadoop services
 ENTRYPOINT $HADOOP_HOME/hadoop-services.sh; bash
