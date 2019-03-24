@@ -14,8 +14,9 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-serv
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # setup ssh with no passphrase
-RUN ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -P "" \
-    && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
+    && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys \
+	&& chmod 0600 ~/.ssh/authorized_keys
 
 # add user for hadoop
 RUN useradd -ms /bin/bash hadoop
