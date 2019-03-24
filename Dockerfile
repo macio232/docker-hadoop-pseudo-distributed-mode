@@ -24,9 +24,9 @@ RUN useradd -ms /bin/bash hadoop
 
 # download & extract & move hadoop & clean up
 # TODO: write a way of untarring file to "/usr/local/hadoop" directly
-RUN wget -O /hadoop.tar.gz -q https://iu.box.com/shared/static/u9wy21nev5hxznhuhu0v6dzmcqhkhaz7.gz \
+RUN wget -O /hadoop.tar.gz -q https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz \
 	&& tar xfz hadoop.tar.gz \
-	&& mv /hadoop-2.7.3 /usr/local/hadoop \
+	&& mv /hadoop-3.1.2 /usr/local/hadoop \
 	&& rm /hadoop.tar.gz
 
 # hadoop environment variables
