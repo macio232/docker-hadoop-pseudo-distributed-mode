@@ -2,7 +2,7 @@
 # Coding Style: Shell form
 
 # Start from Ubuntu OS image
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 # set root user
 USER root
@@ -16,6 +16,9 @@ ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 # setup ssh with no passphrase
 RUN ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -P "" \
     && cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+
+# add user for hadoop
+RUN useradd -ms /bin/bash hadoop
 
 # download & extract & move hadoop & clean up
 # TODO: write a way of untarring file to "/usr/local/hadoop" directly
