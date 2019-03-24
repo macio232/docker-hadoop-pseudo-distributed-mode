@@ -8,10 +8,10 @@ FROM ubuntu:16.04
 USER root
 
 # install utilities on up-to-date node
-RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-server default-jdk wget
+RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-server wget openjdk-8-jdk
 
 # set java home
-ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # setup ssh with no passphrase
 RUN ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -P "" \
