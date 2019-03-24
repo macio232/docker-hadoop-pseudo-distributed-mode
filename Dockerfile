@@ -31,7 +31,13 @@ RUN wget -O /hadoop.tar.gz -q https://www.apache.org/dyn/closer.cgi/hadoop/commo
 
 # hadoop environment variables
 ENV HADOOP_HOME=/usr/local/hadoop
-ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin 
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+ENV HADOOP_MAPRED_HOME=$HADOOP_HOME
+ENV HADOOP_COMMON_HOME=$HADOOP_HOME
+ENV HADOOP_HDFS_HOME=$HADOOP_HOME
+ENV YARN_HOME=$HADOOP_HOME
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+ENV HADOOP_INSTALL=$HADOOP_HOME
 
 # hadoop-store
 RUN mkdir -p $HADOOP_HOME/hdfs/namenode \
