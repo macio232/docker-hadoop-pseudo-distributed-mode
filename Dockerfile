@@ -8,7 +8,7 @@ FROM ubuntu:16.04
 USER root
 
 # install utilities on up-to-date node
-RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-server wget openjdk-8-jdk
+RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-server wget openjdk-8-jdk vim
 
 # set java home
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
