@@ -14,6 +14,8 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-serv
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin
 
+RUN java -version
+
 # setup ssh with no passphrase
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
     && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys \
@@ -24,8 +26,8 @@ RUN useradd -ms /bin/bash hadoop
 
 # download & extract & move hadoop & clean up
 # TODO: write a way of untarring file to "/usr/local/hadoop" directly
-RUN wget -O /hadoop.tar.gz -q https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz \
-	&& tar xfz hadoop.tar.gz \
+RUN wget -O /hadoop.tar.gz -q http://ftp.man.poznan.pl/apache/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz \
+	&& tar -xzvf hadoop.tar.gz \
 	&& mv /hadoop-3.1.2 /usr/local/hadoop \
 	&& rm /hadoop.tar.gz
 
@@ -38,7 +40,7 @@ ENV HADOOP_HDFS_HOME=$HADOOP_HOME
 ENV YARN_HOME=$HADOOP_HOME
 ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 ENV HADOOP_INSTALL=$HADOOP_HOME
-ENV HADOOP_CLASSPATH=$(hadoop classpath):$HADOOP_CLASSPATH
+# ENV HADOOP_CLASSPATH=$(hadoop classpath):$HADOOP_CLASSPATH
 
 # hadoop-store
 RUN mkdir -p $HADOOP_HOME/hdfs/namenode \
@@ -48,8 +50,8 @@ RUN mkdir -p $HADOOP_HOME/hdfs/namenode \
 # NOTE: Directly using COPY/ ADD will NOT work if you are NOT using absolute paths inside the docker image.
 # Temporary files: http://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch03s18.html
 COPY config/ /tmp/
-RUN mv /tmp/ssh_config $HOME/.ssh/config \
-    && mv /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
+# RUN mv /tmp/ssh_config $HOME/.ssh/config \
+RUN mv /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
     && mv /tmp/core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml \
     && mv /tmp/hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml \
     && mv /tmp/mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml.template \
@@ -57,15 +59,22 @@ RUN mv /tmp/ssh_config $HOME/.ssh/config \
     && mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
 
 # Add startup script
-ADD scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
+COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 
 # set permissions
-RUN chmod 744 -R $HADOOP_HOME
+# RUN chmod 744 -R $HADOOP_HOME
 
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
-RUN $HADOOP_HOME/bin/hdfs fs -mkdir /input
+
+# prepare input environment
+# RUN service ssh start
+# RUN $HADOOP_HOME/sbin/start-dfs.sh
+# RUN $HADOOP_HOME/bin/hadoop fs -mkdir /user
+# RUN $HADOOP_HOME/bin/hadoop fs -mkdir /user/input
+# RUN $HADOOP_HOME/sbin/stop-dfs.sh
 
 # run hadoop services
-ENTRYPOINT $HADOOP_HOME/hadoop-services.sh; bash
+# ENTRYPOINT $HADOOP_HOME/hadoop-services.sh
+CMD bash
 
