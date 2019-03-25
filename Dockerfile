@@ -14,8 +14,6 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-serv
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin
 
-RUN java -version
-
 # setup ssh with no passphrase
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
     && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys \
@@ -60,9 +58,11 @@ RUN mv /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
 
 # Add startup script
 COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
+# CMD chmod +x $HADOOP_HOME/hadoop-services.sh
 
 # set permissions
 # RUN chmod 744 -R $HADOOP_HOME
+RUN chmod 711 -R $HADOOP_HOME
 
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
@@ -75,6 +75,9 @@ RUN $HADOOP_HOME/bin/hdfs namenode -format
 # RUN $HADOOP_HOME/sbin/stop-dfs.sh
 
 # run hadoop services
-# ENTRYPOINT $HADOOP_HOME/hadoop-services.sh
-CMD bash
+RUN bin/sh $HADOOP_HOME/hadoop-services.sh
+# RUN hadoop fs -mkdir /user
+# RUN hadoop fs -mkdir /user/input
+
+ENTRYPOINT /bin/bash
 

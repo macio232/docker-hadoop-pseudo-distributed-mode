@@ -3,6 +3,8 @@ echo "RUN service ssh start"
 service ssh start
 echo "HADOOP SERVICES"
 $HADOOP_HOME/sbin/start-dfs.sh
+# $HADOOP_HOME/bin/hadoop fs -mkdir /user
+# $HADOOP_HOME/bin/hadoop fs -mkdir /user/input
 $HADOOP_HOME/sbin/start-yarn.sh
 echo "RUN jps - Java Virtual Machine Process Status Tool"
 jps -lm
