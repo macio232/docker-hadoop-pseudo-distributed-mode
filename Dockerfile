@@ -79,5 +79,5 @@ RUN $HADOOP_HOME/bin/hdfs namenode -format
 # RUN hadoop fs -mkdir /user
 # RUN hadoop fs -mkdir /user/input
 
-ENTRYPOINT bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
+ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 

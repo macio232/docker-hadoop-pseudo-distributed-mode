@@ -30,3 +30,4 @@ echo "TERASORT RUNTIME: $((TERASORT_END-TERASORT_START)) Seconds for sorting $TO
 #hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.[0-9].jar mrbench -numRuns 50 \
 #	-baseDir /user/$USER/benchmarks/MRBench
 set +e
+$HADOOP_HOME/bin/hadoop fs -mkdir /user/input
