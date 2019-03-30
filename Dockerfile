@@ -23,7 +23,6 @@ RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
 RUN useradd -ms /bin/bash hadoop
 
 # download & extract & move hadoop & clean up
-# TODO: write a way of untarring file to "/usr/local/hadoop" directly
 RUN wget -O /hadoop.tar.gz -q http://ftp.man.poznan.pl/apache/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz \
 	&& tar -xzvf hadoop.tar.gz \
 	&& mv /hadoop-3.1.2 /usr/local/hadoop \
@@ -38,7 +37,6 @@ ENV HADOOP_HDFS_HOME=$HADOOP_HOME
 ENV YARN_HOME=$HADOOP_HOME
 ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 ENV HADOOP_INSTALL=$HADOOP_HOME
-# ENV HADOOP_CLASSPATH=$(hadoop classpath):$HADOOP_CLASSPATH
 
 # hadoop-store
 RUN mkdir -p $HADOOP_HOME/hdfs/namenode \
@@ -58,26 +56,12 @@ RUN mv /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
 
 # Add startup script
 COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
-# CMD chmod +x $HADOOP_HOME/hadoop-services.sh
 
 # set permissions
-# RUN chmod 744 -R $HADOOP_HOME
 RUN chmod 711 -R $HADOOP_HOME
 
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
-
-# prepare input environment
-# RUN service ssh start
-# RUN $HADOOP_HOME/sbin/start-dfs.sh
-# RUN $HADOOP_HOME/bin/hadoop fs -mkdir /user
-# RUN $HADOOP_HOME/bin/hadoop fs -mkdir /user/input
-# RUN $HADOOP_HOME/sbin/stop-dfs.sh
-
-# run hadoop services
-# RUN bin/sh $HADOOP_HOME/hadoop-services.sh
-# RUN hadoop fs -mkdir /user
-# RUN hadoop fs -mkdir /user/input
 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
