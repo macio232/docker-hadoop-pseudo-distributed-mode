@@ -75,9 +75,9 @@ RUN $HADOOP_HOME/bin/hdfs namenode -format
 # RUN $HADOOP_HOME/sbin/stop-dfs.sh
 
 # run hadoop services
-# RUN bin/sh $HADOOP_HOME/hadoop-services.sh
+RUN bin/sh $HADOOP_HOME/hadoop-services.sh
 # RUN hadoop fs -mkdir /user
 # RUN hadoop fs -mkdir /user/input
 
-ENTRYPOINT bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
+ENTRYPOINT /bin/bash
 
