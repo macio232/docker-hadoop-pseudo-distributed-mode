@@ -17,9 +17,9 @@ Follow the instructions from [Post-installation steps for Linux](https://docs.do
 	git clone https://github.com/mjaglan/docker-hadoop-pseudo-distributed-mode.git
 	cd docker-hadoop-pseudo-distributed-mode
 	```
-- Run the following script
+- Run the following command
 	```
-	. ./restart-all.sh
+	docker run -it hadoop_pdm -p 9870:9070 -p 8088:8088
 	```
 
 

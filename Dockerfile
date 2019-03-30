@@ -65,3 +65,7 @@ RUN $HADOOP_HOME/bin/hdfs namenode -format
 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
+EXPOSE 9870
+
+EXPOSE 8088
+
