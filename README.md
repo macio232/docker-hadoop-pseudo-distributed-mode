@@ -29,3 +29,4 @@
 - [yarn-default.xml](https://hadoop.apache.org/docs/r3.1.2/hadoop-yarn/hadoop-yarn-common/yarn-default.xml)
 - [DeprecatedProperties.html](https://hadoop.apache.org/docs/r3.1.2/hadoop-project-dist/hadoop-common/DeprecatedProperties.html)
 
+The original repository for this image can be found under [https://github.com/mjaglan/docker-hadoop-pseudo-distributed-mode](https://github.com/mjaglan/docker-hadoop-pseudo-distributed-mode).
