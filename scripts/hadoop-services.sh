@@ -2,6 +2,8 @@
 echo "RUN service ssh start"
 service ssh start
 echo "HADOOP SERVICES"
+$HADOOP_HOME/sbin/stop-dfs.sh
+$HADOOP_HOME/sbin/stop-yarn.sh
 $HADOOP_HOME/sbin/start-dfs.sh
 # $HADOOP_HOME/bin/hadoop fs -mkdir /user
 # $HADOOP_HOME/bin/hadoop fs -mkdir /user/input
@@ -10,6 +12,8 @@ echo "RUN jps - Java Virtual Machine Process Status Tool"
 jps -lm
 echo "Get basic filesystem information and statistics."
 hdfs dfsadmin -report
+hdfs dfsadmin -safemode leave
+$HADOOP_HOME/bin/hadoop fs -rm -r -f /user/benchmarks
 set -e
 echo "HADOOP TERASORT BENCHMARK TEST"
 # numfmt: https://www.gnu.org/software/coreutils/manual/html_node/numfmt-invocation.html
@@ -30,4 +34,5 @@ echo "TERASORT RUNTIME: $((TERASORT_END-TERASORT_START)) Seconds for sorting $TO
 #hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.[0-9].jar mrbench -numRuns 50 \
 #	-baseDir /user/$USER/benchmarks/MRBench
 set +e
-$HADOOP_HOME/bin/hadoop fs -mkdir /user/input
+#$HADOOP_HOME/bin/hadoop fs -mkdir /user/input
+if $($HADOOP_HOME/bin/hadoop fs -test -d /user/input); then echo "/user/input already exists"; else $HADOOP_HOME/bin/hadoop fs -mkdir /user/input; fi 
