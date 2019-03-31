@@ -58,7 +58,7 @@ RUN mv /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
 COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 
 # set permissions
-RUN chmod 711 -R $HADOOP_HOME
+# RUN chmod 711 -R $HADOOP_HOME
 
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
