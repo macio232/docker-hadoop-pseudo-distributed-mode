@@ -11,7 +11,7 @@
 	```
 	docker run -p 9870:9870 -p 8088:8088 -v <host-directory>:/home/hadoop/data -it --name=container_name <image_name>
 	```
-Runs Hadoop startup script and bash on `ENTRYPOINT`.
+	Runs Hadoop startup script and bash on `ENTRYPOINT`.
 
 ## TODO
 - Add execution of `stop-dfs.sh` and `stop-yarn.sh` at shutdown as described in [here](https://unix.stackexchange.com/questions/146756/forward-sigterm-to-child-in-bash/146770#146770)
