@@ -66,9 +66,9 @@ COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
 
-# RUN chmod +x $HADOOP_HOME/hadoop-benchmark.sh && /bin/sh $HADOOP_HOME/hadoop-benchmark.sh
+RUN chmod +x $HADOOP_HOME/hadoop-benchmark.sh && /bin/sh $HADOOP_HOME/hadoop-benchmark.sh
 
-RUN $HADOOP_HOME/hadoop-benchmark.sh
+# RUN $HADOOP_HOME/hadoop-benchmark.sh
 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
