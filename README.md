@@ -7,6 +7,10 @@
 	docker build -t <image_name> .
 	```
 	While building a benchmark script is executed.
+- or
+	```
+	docker pull macio232/hadoop-pseudo-distributed-mode
+	```
 - Run the following command
 	```
 	docker run -p 9870:9870 -p 8088:8088 -v <host-directory>:/home/hadoop/data -it --name=container_name <image_name>
