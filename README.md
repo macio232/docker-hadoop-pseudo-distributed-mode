@@ -5,6 +5,11 @@
 - Run the following command
 	```
 	docker run -p 9870:9870 -p 8088:8088 -it --name=container_name hadoop_pdm
+	```
+Runs startup script. Tests cluster on a set of benchmark tasks.
+
+## TODO
+- Add execution of `stop-dfs.sh` and `stop-yarn.sh` at shutdown as described in [here](https://unix.stackexchange.com/questions/146756/forward-sigterm-to-child-in-bash/146770#146770)
 
 ## Configuration References
 - [Apache Hadoop 3.1.2 docs](https://hadoop.apache.org/docs/r3.1.2/)
