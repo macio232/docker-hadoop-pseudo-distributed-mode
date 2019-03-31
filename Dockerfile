@@ -56,7 +56,8 @@ RUN mv /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh \
 	&& mv /tmp/example.txt /home/hadoop/example.txt \
 	&& mkdir /home/hadoop/data
 
-# Add startup script
+# Add benchmark & startup script
+COPY scripts/hadoop-benchmark.sh $HADOOP_HOME/hadoop-benchmark.sh
 COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 
 # set permissions
@@ -64,6 +65,10 @@ COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
+
+# RUN chmod +x $HADOOP_HOME/hadoop-benchmark.sh && /bin/sh $HADOOP_HOME/hadoop-benchmark.sh
+
+RUN /bin/sh -c $HADOOP_HOME/hadoop-benchmark.sh
 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
