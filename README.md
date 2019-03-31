@@ -2,9 +2,13 @@
 
 ## How to Run
 - Go to your terminal.
+- Navigate to directory with `Dockerfile` and build image
+	```
+	docker build -t <image_name> .
+	```
 - Run the following command
 	```
-	docker run -p 9870:9870 -p 8088:8088 -it --name=container_name hadoop_pdm
+	docker run -p 9870:9870 -p 8088:8088 -v <host-directory>:/home/hadoop/data -it --name=container_name <image_name>
 	```
 Runs startup script. Tests cluster on a set of benchmark tasks.
 
