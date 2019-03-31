@@ -6,14 +6,16 @@
 	```
 	docker build -t <image_name> .
 	```
+	While building a benchmark script is executed.
 - Run the following command
 	```
 	docker run -p 9870:9870 -p 8088:8088 -v <host-directory>:/home/hadoop/data -it --name=container_name <image_name>
 	```
-Runs startup script. Tests cluster on a set of benchmark tasks.
+Runs Hadoop startup script and bash on `ENTRYPOINT`.
 
 ## TODO
 - Add execution of `stop-dfs.sh` and `stop-yarn.sh` at shutdown as described in [here](https://unix.stackexchange.com/questions/146756/forward-sigterm-to-child-in-bash/146770#146770)
+- Solve `mesg: ttyname failed: Inappropriate ioctl for device` issue during benchmark execution
 
 ## Configuration References
 - [Apache Hadoop 3.1.2 docs](https://hadoop.apache.org/docs/r3.1.2/)
