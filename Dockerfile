@@ -66,9 +66,14 @@ COPY scripts/hadoop-services.sh $HADOOP_HOME/hadoop-services.sh
 # format namenode
 RUN $HADOOP_HOME/bin/hdfs namenode -format
 
-RUN chmod +x $HADOOP_HOME/hadoop-benchmark.sh && /bin/sh $HADOOP_HOME/hadoop-benchmark.sh
+# RUN chmod +x $HADOOP_HOME/hadoop-benchmark.sh && /bin/sh $HADOOP_HOME/hadoop-benchmark.sh
 
 # RUN $HADOOP_HOME/hadoop-benchmark.sh
+
+RUN wget -O /hive-2.3.4.tar.gz -q http://ftp.man.poznan.pl/apache/hive/stable-2/apache-hive-2.3.4-bin.tar.gz \
+	&& mkdir /home/hadoop/hive-2.3.4 \
+	&& tar -xzvf hive-2.3.4.tar.gz -C /home/hadoop/hive-2.3.4 --strip-components=1 \
+	&& rm /hive-2.3.4.tar.gz
 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
