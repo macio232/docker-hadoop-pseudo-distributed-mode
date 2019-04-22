@@ -1,4 +1,4 @@
-# Run Hadoop 3.1.2 on Ubuntu 16.04 inside docker container in Pseudo-distributed mode
+# Run Hadoop 3.1.2 (with Hive 2.3.4) on Ubuntu 16.04 inside docker container in Pseudo-distributed mode
 
 ## How to Run
 - Go to your terminal.
@@ -6,7 +6,6 @@
 	```
 	docker build -t <image_name> .
 	```
-	While building a benchmark script is executed.
 - or
 	```
 	docker pull macio232/hadoop-pseudo-distributed-mode
@@ -16,6 +15,15 @@
 	docker run -p 9870:9870 -p 8088:8088 -v <host-directory>:/home/hadoop/data -it --name=container_name <image_name>
 	```
 	Runs Hadoop startup script and bash on `ENTRYPOINT`.
+- To use hive run
+	```
+	nohup hiveserver2 &
+	```
+	and press `ENTER` after a second. This start hive server.
+	To connect to the client run
+	```
+	beeline -n root -u jdbc:hive2://localhost:10000
+	```
 
 ## TODO
 - Add execution of `stop-dfs.sh` and `stop-yarn.sh` at shutdown as described in [here](https://unix.stackexchange.com/questions/146756/forward-sigterm-to-child-in-bash/146770#146770)
