@@ -19,7 +19,8 @@
 	```
 	nohup hiveserver2 &
 	```
-	and press `ENTER` after a second. This start hive server.
+	and press `ENTER` after a second. This starts hive server.
+	
 	To connect to the client run
 	```
 	beeline -n root -u jdbc:hive2://localhost:10000
