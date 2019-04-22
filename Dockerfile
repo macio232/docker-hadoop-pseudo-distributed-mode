@@ -85,7 +85,8 @@ RUN /bin/sh $HADOOP_HOME/hadoop-services.sh \
 	&& hdfs dfs -mkdir /tmp \
 	&& hdfs dfs -chmod g+w /user/hive/warehouse \
 	&& hdfs dfs -chmod g+w /tmp \
-	&& mv /tmp/hive-env.sh $HIVE_HOME/conf/hive-env.sh
+	&& mv /tmp/hive-env.sh $HIVE_HOME/conf/hive-env.sh \
+	&& mv /tmp/hive-site.xml $HIVE_HOME/conf/hive-site.xml
  
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
