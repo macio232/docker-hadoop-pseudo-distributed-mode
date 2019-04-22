@@ -80,12 +80,7 @@ ENV HIVE_HOME=/home/hadoop/hive-2.3.4
 ENV PATH=$PATH:$HIVE_HOME/bin
 
 # create Hive directories in hdfs and copy init configuration
-RUN /bin/sh $HADOOP_HOME/hadoop-services.sh \
-	&& hdfs dfs -mkdir -p /user/hive/warehouse \
-	&& hdfs dfs -mkdir /tmp \
-	&& hdfs dfs -chmod g+w /user/hive/warehouse \
-	&& hdfs dfs -chmod g+w /tmp \
-	&& mv /tmp/hive-env.sh $HIVE_HOME/conf/hive-env.sh \
+RUN mv /tmp/hive-env.sh $HIVE_HOME/conf/hive-env.sh \
 	&& mv /tmp/hive-site.xml $HIVE_HOME/conf/hive-site.xml
  
 # init Derby database
