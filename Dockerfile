@@ -75,6 +75,17 @@ RUN wget -O /hive-2.3.4.tar.gz -q http://ftp.man.poznan.pl/apache/hive/stable-2/
 	&& tar -xzvf hive-2.3.4.tar.gz -C /home/hadoop/hive-2.3.4 --strip-components=1 \
 	&& rm /hive-2.3.4.tar.gz
 
+# Hive environment variables
+ENV HIVE_HOME=/home/hadoop/hive-2.3.4
+ENV PATH=$PATH:$HIVE_HOME/bin
+
+# create Hive directories in hdfs
+RUN /bin/sh $HADOOP_HOME/hadoop-services.sh \
+	&& hdfs dfs -mkdir -p /user/hive/warehouse \
+	&& hdfs dfs -mkdir /tmp \
+	&& hdfs dfs -chmod g+w /user/hive/warehouse \
+	&& hdfs dfs -chmod g+w /tmp
+ 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
 EXPOSE 9870
