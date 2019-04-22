@@ -28,6 +28,11 @@ RUN wget -O /hadoop.tar.gz -q http://ftp.man.poznan.pl/apache/hadoop/common/hado
 	&& mv /hadoop-3.1.2 /usr/local/hadoop \
 	&& rm /hadoop.tar.gz
 
+RUN wget -O /hive-2.3.4.tar.gz -q http://ftp.man.poznan.pl/apache/hive/stable-2/apache-hive-2.3.4-bin.tar.gz \
+        && mkdir /home/hadoop/hive-2.3.4 \
+        && tar -xzvf hive-2.3.4.tar.gz -C /home/hadoop/hive-2.3.4 --strip-components=1 \
+        && rm /hive-2.3.4.tar.gz
+
 # hadoop environment variables
 ENV HADOOP_HOME=/usr/local/hadoop
 ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
@@ -69,11 +74,6 @@ RUN $HADOOP_HOME/bin/hdfs namenode -format
 # RUN chmod +x $HADOOP_HOME/hadoop-benchmark.sh && /bin/sh $HADOOP_HOME/hadoop-benchmark.sh
 
 # RUN $HADOOP_HOME/hadoop-benchmark.sh
-
-RUN wget -O /hive-2.3.4.tar.gz -q http://ftp.man.poznan.pl/apache/hive/stable-2/apache-hive-2.3.4-bin.tar.gz \
-	&& mkdir /home/hadoop/hive-2.3.4 \
-	&& tar -xzvf hive-2.3.4.tar.gz -C /home/hadoop/hive-2.3.4 --strip-components=1 \
-	&& rm /hive-2.3.4.tar.gz
 
 # Hive environment variables
 ENV HIVE_HOME=/home/hadoop/hive-2.3.4
