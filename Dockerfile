@@ -79,12 +79,13 @@ RUN wget -O /hive-2.3.4.tar.gz -q http://ftp.man.poznan.pl/apache/hive/stable-2/
 ENV HIVE_HOME=/home/hadoop/hive-2.3.4
 ENV PATH=$PATH:$HIVE_HOME/bin
 
-# create Hive directories in hdfs
+# create Hive directories in hdfs and copy init configuration
 RUN /bin/sh $HADOOP_HOME/hadoop-services.sh \
 	&& hdfs dfs -mkdir -p /user/hive/warehouse \
 	&& hdfs dfs -mkdir /tmp \
 	&& hdfs dfs -chmod g+w /user/hive/warehouse \
-	&& hdfs dfs -chmod g+w /tmp
+	&& hdfs dfs -chmod g+w /tmp \
+	&& mv /tmp/hive-env.sh $HIVE_HOME/conf/hive-env.sh
  
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
