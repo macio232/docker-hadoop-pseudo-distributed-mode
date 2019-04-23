@@ -84,7 +84,8 @@ RUN mv /tmp/hive-env.sh $HIVE_HOME/conf/hive-env.sh \
 	&& mv /tmp/hive-site.xml $HIVE_HOME/conf/hive-site.xml
  
 # init Derby database
-RUN cd $HIVE_HOME && rm /usr/local/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar && bin/schematool -initSchema -dbType derby
+#RUN cd $HIVE_HOME && rm /usr/local/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar && bin/schematool -initSchema -dbType derby
+RUN cd $HIVE_HOME && rm /home/hadoop/hive-2.3.4/lib/log4j-slf4j-impl-2.6.2.jar && bin/schematool -initSchema -dbType derby
 
 ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 
