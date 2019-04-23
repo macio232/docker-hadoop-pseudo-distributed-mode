@@ -19,7 +19,7 @@
 	```
 	nohup hiveserver2 &
 	```
-	and press `ENTER` after a second. This starts hive server.
+	and press `ENTER`. This starts hive server.
 	
 	To connect to the client run
 	```
