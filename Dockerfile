@@ -8,7 +8,8 @@ FROM ubuntu:16.04
 USER root
 
 # install utilities on up-to-date node
-RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-server wget openjdk-8-jdk vim
+RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y openssh-server wget openjdk-8-jdk vim scala python3 python3-pip && pip3 install py4j
+
 
 # set java home
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -28,10 +29,15 @@ RUN wget -O /hadoop.tar.gz -q http://ftp.man.poznan.pl/apache/hadoop/common/hado
 	&& mv /hadoop-3.1.2 /usr/local/hadoop \
 	&& rm /hadoop.tar.gz
 
-RUN wget -O /hive-2.3.4.tar.gz -q http://ftp.man.poznan.pl/apache/hive/stable-2/apache-hive-2.3.4-bin.tar.gz \
+RUN wget -O /hive-2.3.4.tar.gz -q https://archive.apache.org/dist/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz \
         && mkdir /home/hadoop/hive-2.3.4 \
         && tar -xzvf hive-2.3.4.tar.gz -C /home/hadoop/hive-2.3.4 --strip-components=1 \
         && rm /hive-2.3.4.tar.gz
+	
+RUN wget -O /spark-2.4.3.tgz -q http://ftp.man.poznan.pl/apache/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz \
+        && mkdir /home/hadoop/spark-2.4.3 \
+        && tar -xvf /spark-2.4.3.tgz -C /home/hadoop/spark-2.4.3 --strip-components=1 \
+        && rm /spark-2.4.3.tgz	
 
 # hadoop environment variables
 ENV HADOOP_HOME=/usr/local/hadoop
@@ -42,6 +48,13 @@ ENV HADOOP_HDFS_HOME=$HADOOP_HOME
 ENV YARN_HOME=$HADOOP_HOME
 ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 ENV HADOOP_INSTALL=$HADOOP_HOME
+
+# spark env conf
+ENV SPARK_HOME=/home/hadoop/spark-2.4.3
+ENV PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+ENV PATH=$PATH:$SPARK_HOME/bin
+ENV PYSPARK_PYTHON=python3
 
 # hadoop-store
 RUN mkdir -p $HADOOP_HOME/hdfs/namenode \
@@ -87,4 +100,6 @@ ENTRYPOINT /bin/sh $HADOOP_HOME/hadoop-services.sh && /bin/bash
 EXPOSE 9870
 
 EXPOSE 8088
+
+EXPOSE 4040
 
